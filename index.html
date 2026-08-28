@@ -25,7 +25,9 @@
             --fond: #F9FBF8;
             --blanc: #ffffff;
             --gris-texte: #3d4a44;
+            --gris-clair: #e9ecef;
             --ombre: 0 8px 30px rgba(27, 77, 46, 0.10);
+            --ombre-hover: 0 16px 48px rgba(27, 77, 46, 0.18);
             --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             --radius: 20px;
         }
@@ -109,115 +111,97 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #f2f7f2 0%, #e8efe7 100%);
+            background: var(--fond);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             transition: opacity 0.8s ease, visibility 0.8s ease;
-            gap: 30px;
+            gap: 24px;
         }
         .page-loader.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-        .loader-leaf {
+        .loader-ring {
             position: relative;
             width: 80px;
             height: 80px;
         }
-        .loader-leaf i {
-            position: absolute;
-            font-size: 2.2rem;
-            color: var(--vert);
-            animation: leafFloat 1.8s ease-in-out infinite;
-        }
-        .loader-leaf i:nth-child(1) {
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            animation-delay: 0s;
-            color: var(--accent);
-        }
-        .loader-leaf i:nth-child(2) {
-            bottom: 0;
-            left: 10%;
-            animation-delay: 0.3s;
-        }
-        .loader-leaf i:nth-child(3) {
-            bottom: 0;
-            right: 10%;
-            animation-delay: 0.6s;
-        }
-        @keyframes leafFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
-            50% { transform: translateY(-20px) rotate(10deg) scale(1.1); opacity: 1; }
-        }
-        .loader-ring {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 4px solid rgba(27, 77, 46, 0.08);
-            border-top: 4px solid var(--vert);
-            border-right: 4px solid var(--accent);
-            animation: spin 1.2s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
-            position: absolute;
-        }
+        .loader-ring::before,
         .loader-ring::after {
             content: '';
             position: absolute;
-            top: 8px;
-            left: 8px;
-            right: 8px;
-            bottom: 8px;
             border-radius: 50%;
-            border: 3px solid rgba(255, 107, 53, 0.12);
-            border-bottom: 3px solid var(--accent);
-            animation: spin 0.8s linear infinite reverse;
+            border: 4px solid transparent;
+            animation: spinRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+        .loader-ring::before {
+            width: 100%;
+            height: 100%;
+            border-top-color: var(--vert);
+            border-right-color: var(--accent);
+            animation-duration: 1.2s;
+        }
+        .loader-ring::after {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            border-bottom-color: var(--accent);
+            border-left-color: var(--vert);
+            animation-duration: 0.8s;
+            animation-direction: reverse;
+        }
+        @keyframes spinRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         .loader-text {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: var(--vert);
             letter-spacing: 3px;
-            animation: pulseText 2s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            position: relative;
         }
-        .loader-text span { color: var(--accent); }
-        .loader-text i {
-            font-size: 1.4rem;
+        .loader-text span {
             color: var(--accent);
-            animation: pulseText 1.5s ease-in-out infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .loader-text::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--vert), var(--accent), var(--vert));
+            background-size: 200% 100%;
+            animation: shimmer 1.5s linear infinite;
+            border-radius: 2px;
         }
-        @keyframes pulseText {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.02); }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
         .loader-dots {
             display: flex;
-            gap: 12px;
-            margin-top: 10px;
+            gap: 10px;
         }
         .loader-dots span {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background: var(--vert);
+            background: var(--accent);
             animation: dotBounce 1.4s ease-in-out infinite;
         }
-        .loader-dots span:nth-child(2) { animation-delay: 0.2s; background: var(--accent); }
-        .loader-dots span:nth-child(3) { animation-delay: 0.4s; background: var(--vert-clair); }
+        .loader-dots span:nth-child(1) { animation-delay: 0s; }
+        .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes dotBounce {
-            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
             40% { transform: scale(1); opacity: 1; }
         }
 
@@ -241,9 +225,9 @@
 
         /* ===== HEADER ===== */
         .header {
-            background: rgba(255,255,255,0.96);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -252,7 +236,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 0;
+            padding: 12px 0;
             flex-wrap: wrap;
             gap: 12px;
         }
@@ -325,17 +309,16 @@
         /* ===== HERO AVEC SLIDER EN FOND ===== */
         .hero {
             position: relative;
-            min-height: 85vh;
+            height: 90vh;
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: white;
+            color: #fff;
             overflow: hidden;
-            padding: 120px 20px 80px;
         }
-        /* Slider en fond */
-        .hero-slider-bg {
+        .hero-slider {
             position: absolute;
             top: 0;
             left: 0;
@@ -343,127 +326,63 @@
             height: 100%;
             z-index: 0;
         }
-        .hero-slider-bg .slider-track {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .hero-slider-bg .slide {
-            min-width: 100%;
-            height: 100%;
-            flex-shrink: 0;
-        }
-        .hero-slider-bg .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        /* Overlay sombre */
-        .hero-overlay {
+        .hero-slider .slide {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.55);
-            z-index: 1;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            background-size: cover;
+            background-position: center;
         }
-        /* Contenu centré */
+        .hero-slider .slide.active {
+            opacity: 1;
+        }
+        .hero-slider .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+        }
         .hero-content {
             position: relative;
             z-index: 2;
             max-width: 800px;
-            margin: 0 auto;
-            animation: fadeInUp 1s ease-out 0.5s both;
+            padding: 20px;
+            animation: fadeUp 1s ease-out 0.3s both;
         }
         .hero-content h1 {
             font-size: 3.8rem;
             font-weight: 900;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
             margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         .hero-content h1 span { color: var(--accent); }
-        .hero-content .hero-slogan {
-            font-size: 1.6rem;
+        .hero-content .subtitle {
+            font-size: 1.5rem;
             font-weight: 300;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
             margin-bottom: 30px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.5);
         }
-        .hero-content .hero-slogan i { color: var(--accent); margin-right: 8px; }
-        .hero-cta {
+        .hero-content .subtitle i { color: var(--accent); }
+        .hero-buttons {
             display: flex;
+            gap: 16px;
             justify-content: center;
-            gap: 20px;
             flex-wrap: wrap;
         }
-        .hero-cta .btn {
+        .hero-buttons .btn {
             font-size: 1.05rem;
-            padding: 16px 40px;
-        }
-        .hero-cta .btn-outline {
-            border-color: white;
-            color: white;
-            background: transparent;
-            box-shadow: none;
-        }
-        .hero-cta .btn-outline:hover {
-            background: white;
-            color: var(--vert);
-        }
-        /* Flèches du slider (transparentes) */
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.3);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            color: white;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-        }
-        .slider-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-        .slider-btn.prev { left: 20px; }
-        .slider-btn.next { right: 20px; }
-
-        .slider-dots {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 14px;
-            z-index: 5;
-        }
-        .slider-dots .dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.4);
-            border: 2px solid rgba(255,255,255,0.6);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .slider-dots .dot.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            transform: scale(1.2);
+            padding: 16px 38px;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -471,8 +390,6 @@
         .reassurance {
             padding: 50px 0 40px;
             background: var(--blanc);
-            position: relative;
-            z-index: 2;
         }
         .reassurance-grid {
             display: grid;
@@ -551,7 +468,7 @@
         }
         .produit-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 16px 48px rgba(27, 77, 46, 0.18);
+            box-shadow: var(--ombre-hover);
         }
         .produit-card .card-img {
             height: 240px;
@@ -644,10 +561,11 @@
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
             animation: fadeUp 0.3s ease;
         }
-        @keyframes fadeUp {
+        @keyframes fadeUpModal {
             from { opacity: 0; transform: translateY(30px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
+        .modal { animation: fadeUpModal 0.3s ease; }
         .modal-close {
             position: absolute;
             top: 18px;
@@ -873,8 +791,7 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
             .hero-content h1 { font-size: 2.8rem; }
-            .hero-content .hero-slogan { font-size: 1.3rem; }
-            .produits-grid { gap: 28px; }
+            .hero-content .subtitle { font-size: 1.3rem; }
         }
         @media (max-width: 768px) {
             .hamburger { display: block; }
@@ -889,6 +806,15 @@
             .nav.ouvert { display: flex; }
             .header-inner { flex-wrap: wrap; }
             .header-actions { margin-left: auto; }
+
+            .hero {
+                height: 80vh;
+                min-height: 400px;
+            }
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content .subtitle { font-size: 1.1rem; }
+            .hero-buttons .btn { padding: 14px 28px; font-size: 0.95rem; }
+
             .produits-grid {
                 grid-template-columns: 1fr;
                 max-width: 480px;
@@ -900,7 +826,6 @@
             }
             .modal { padding: 28px 20px; }
             .modal .modal-titre { font-size: 1.6rem; }
-            .hero-content h1 { font-size: 2.2rem; }
             .section-title { font-size: 2rem; }
             .footer-inner {
                 flex-direction: column;
@@ -910,21 +835,16 @@
             .produit-card .card-body .product-actions {
                 grid-template-columns: 1fr;
             }
-            .slider-btn { width: 34px; height: 34px; font-size: 0.9rem; }
-            .slider-btn.prev { left: 10px; }
-            .slider-btn.next { right: 10px; }
-            .hero { min-height: 70vh; padding: 100px 20px 60px; }
+            .whatsapp-float { width: 52px; height: 52px; font-size: 24px; bottom: 20px; right: 20px; }
         }
         @media (max-width: 480px) {
             .hero-content h1 { font-size: 1.8rem; }
-            .hero-content .hero-slogan { font-size: 1rem; }
-            .btn { padding: 12px 24px; font-size: 0.9rem; }
-            .top-bar { font-size: 0.75rem; }
+            .hero-content .subtitle { font-size: 1rem; }
+            .hero-buttons .btn { padding: 12px 20px; font-size: 0.85rem; }
+            .top-bar { font-size: 0.7rem; }
             .produit-card .card-img { height: 180px; }
             .modal .modal-img { height: 160px; }
-            .whatsapp-float { width: 52px; height: 52px; font-size: 24px; bottom: 20px; right: 20px; }
-            .slider-btn { width: 28px; height: 28px; font-size: 0.7rem; }
-            .hero-cta .btn { font-size: 0.9rem; padding: 12px 24px; }
+            .hero { height: 70vh; min-height: 350px; }
         }
     </style>
 </head>
@@ -932,16 +852,8 @@
 
     <!-- ===== LOADER PREMIUM ===== -->
     <div class="page-loader" id="pageLoader">
-        <div class="loader-leaf">
-            <i class="fas fa-leaf"></i>
-            <i class="fas fa-leaf"></i>
-            <i class="fas fa-leaf"></i>
-            <div class="loader-ring"></div>
-        </div>
-        <div class="loader-text">
-            <i class="fas fa-seedling"></i>
-            Vitelis<span>Store</span>
-        </div>
+        <div class="loader-ring"></div>
+        <div class="loader-text">Vitelis<span>Store</span></div>
         <div class="loader-dots">
             <span></span><span></span><span></span>
         </div>
@@ -959,7 +871,7 @@
     <header class="header">
         <div class="container header-inner">
             <div class="logo">
-                <img src="VitelisSores/logo.jpg" alt="VitelisStore" />
+                <img src="logo.jpg" alt="VitelisStore" />
                 <span>Store</span>
             </div>
             <nav class="nav" id="mainNav">
@@ -980,37 +892,18 @@
 
     <!-- ===== HERO AVEC SLIDER EN FOND ===== -->
     <section class="hero" id="hero">
-        <!-- Slider en arrière-plan -->
-        <div class="hero-slider-bg" id="heroSliderBg">
-            <div class="slider-track" id="sliderTrack">
-                <div class="slide"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1920&q=80" alt="Nature et bien-être" /></div>
-                <div class="slide"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1920&q=80" alt="Beauté naturelle" /></div>
-                <div class="slide"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&q=80" alt="Soins naturels" /></div>
-            </div>
+        <div class="hero-slider" id="heroSlider">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1920&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1920&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&q=80');"></div>
         </div>
-        <div class="hero-overlay"></div>
-
-        <!-- Contenu centré -->
         <div class="hero-content">
             <h1>Soins Naturels,<br /><span>Beauté &amp; Bien-être</span></h1>
-            <p class="hero-slogan">
-                <i class="fas fa-leaf"></i> Naturellement, pour vous.
-            </p>
-            <div class="hero-cta">
+            <p class="subtitle"><i class="fas fa-leaf"></i> Naturellement, pour vous.</p>
+            <div class="hero-buttons">
                 <a href="#catalogue" class="btn btn-accent">Découvrir nos produits <i class="fas fa-arrow-right"></i></a>
-                <a href="#catalogue" class="btn btn-outline">Voir la gamme</a>
+                <a href="#catalogue" class="btn btn-outline" style="border-color:#fff;color:#fff;">Voir la gamme</a>
             </div>
-        </div>
-
-        <!-- Flèches du slider -->
-        <button class="slider-btn prev" id="sliderPrev"><i class="fas fa-chevron-left"></i></button>
-        <button class="slider-btn next" id="sliderNext"><i class="fas fa-chevron-right"></i></button>
-
-        <!-- Dots -->
-        <div class="slider-dots" id="sliderDots">
-            <span class="dot active" data-index="0"></span>
-            <span class="dot" data-index="1"></span>
-            <span class="dot" data-index="2"></span>
         </div>
     </section>
 
@@ -1141,57 +1034,37 @@
             setTimeout(function() { loader.classList.add('hidden'); }, 1000);
         });
 
-        // ===== SLIDER EN FOND =====
+        // ===== SLIDER EN FOND (automatique toutes les 3s) =====
         (function() {
-            const track = document.getElementById('sliderTrack');
-            const dots = document.querySelectorAll('.dot');
-            const prevBtn = document.getElementById('sliderPrev');
-            const nextBtn = document.getElementById('sliderNext');
-            let currentIndex = 0;
-            const totalSlides = 3;
+            const slides = document.querySelectorAll('.hero-slider .slide');
+            let current = 0;
+            const total = slides.length;
             let interval;
 
-            function goToSlide(index) {
-                if (index < 0) index = totalSlides - 1;
-                if (index >= totalSlides) index = 0;
-                currentIndex = index;
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentIndex);
+            function goTo(index) {
+                slides.forEach((s, i) => {
+                    s.classList.toggle('active', i === index);
                 });
+                current = index;
             }
 
-            function nextSlide() { goToSlide(currentIndex + 1); }
-            function prevSlide() { goToSlide(currentIndex - 1); }
+            function next() {
+                goTo((current + 1) % total);
+            }
 
             function startInterval() {
                 if (interval) clearInterval(interval);
-                interval = setInterval(nextSlide, 5000);
+                interval = setInterval(next, 3000);
             }
 
-            function resetInterval() {
-                clearInterval(interval);
-                startInterval();
-            }
+            // Démarrer
+            goTo(0);
+            startInterval();
 
-            nextBtn.addEventListener('click', function() { nextSlide(); resetInterval(); });
-            prevBtn.addEventListener('click', function() { prevSlide(); resetInterval(); });
-
-            dots.forEach((dot) => {
-                dot.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
-                    goToSlide(index);
-                    resetInterval();
-                });
-            });
-
-            // Pause au survol
-            const hero = document.getElementById('hero');
+            // Pause au survol (optionnel)
+            const hero = document.querySelector('.hero');
             hero.addEventListener('mouseenter', () => clearInterval(interval));
             hero.addEventListener('mouseleave', startInterval);
-
-            goToSlide(0);
-            startInterval();
         })();
 
         // ===== DONNÉES PRODUITS =====
@@ -1201,7 +1074,7 @@
                 nom: 'Bucco Fraîche',
                 prix: '5 000 FCFA',
                 categorie: 'Soin Bucco-dentaire',
-                image: 'VitelisSores/bucofraiche.png',
+                image: 'bucofraiche.png',
                 description: 'Bain de bouche 100 % naturel contre la mauvaise haleine.',
                 utilisation: '3 fois par semaine pendant 2 semaines (après brossage le soir), puis 1 fois par semaine. Utilisation à partir de 12 ans.',
                 composition: 'Extrait de plantes, écorce de palmier, extrait de jasmin.',
@@ -1213,7 +1086,7 @@
                 nom: 'Souple Éclat',
                 prix: '2 500 FCFA',
                 categorie: 'Soin Capillaire',
-                image: 'VitelisSores/soupleeclat.png',
+                image: 'soupleeclat.png',
                 description: 'Soin organique anti-pelliculaire & pousse des cheveux.',
                 utilisation: 'Appliquer sur cheveux humides, masser doucement, laisser poser 10 min puis rincer. Utiliser 2 à 3 fois par semaine.',
                 composition: 'Beurre de karité, menthol, huile de menthe poivrée, soufre.',
