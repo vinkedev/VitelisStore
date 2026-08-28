@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VitelisStore – Soins Naturels, Beauté & Bien-être</title>
-    <!-- Font Awesome (icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* ===== RESET & BASE ===== */
@@ -144,9 +143,10 @@
             font-weight: 700;
             color: var(--vert);
         }
-        .logo-icon {
-            font-size: 2rem;
-            color: var(--dore);
+        .logo img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
         }
         .logo span {
             color: var(--dore);
@@ -202,7 +202,6 @@
             color: var(--vert);
         }
 
-        /* Hamburger (mobile) */
         .hamburger {
             display: none;
             font-size: 1.8rem;
@@ -254,7 +253,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
         .hero-badge {
             background: var(--blanc);
@@ -267,9 +265,10 @@
             gap: 6px;
             border-left: 6px solid var(--dore);
         }
-        .hero-badge .big-icon {
-            font-size: 4rem;
-            color: var(--dore);
+        .hero-badge img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
         }
         .hero-badge p {
             font-weight: 500;
@@ -340,7 +339,6 @@
             gap: 40px;
         }
 
-        /* Carte produit */
         .produit-card {
             background: var(--blanc);
             border-radius: 28px;
@@ -355,15 +353,20 @@
             box-shadow: 0 16px 48px rgba(27, 77, 46, 0.12);
         }
         .produit-card .card-img {
-            height: 220px;
-            background: #edf3ec;
+            height: 240px;
+            background: #f0f5ee;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4.5rem;
-            color: var(--vert);
             position: relative;
             border-bottom: 3px solid var(--dore);
+            overflow: hidden;
+        }
+        .produit-card .card-img img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            padding: 12px;
         }
         .produit-card .card-img .badge-cat {
             position: absolute;
@@ -455,14 +458,21 @@
             transform: rotate(90deg);
         }
         .modal .modal-img {
-            font-size: 5rem;
-            color: var(--vert);
-            background: #edf3ec;
+            background: #f0f5ee;
             border-radius: 24px;
-            padding: 40px 20px;
+            padding: 20px;
             text-align: center;
             margin-bottom: 20px;
             border: 2px dashed rgba(197, 160, 89, 0.25);
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal .modal-img img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
         }
         .modal .modal-titre {
             font-size: 2rem;
@@ -647,6 +657,12 @@
             .top-bar {
                 font-size: 0.75rem;
             }
+            .produit-card .card-img {
+                height: 180px;
+            }
+            .modal .modal-img {
+                height: 160px;
+            }
         }
     </style>
 </head>
@@ -664,8 +680,8 @@
     <header class="header">
         <div class="container header-inner">
             <div class="logo">
-                <span class="logo-icon"><i class="fas fa-seedling"></i></span>
-                Vitelis<span>Store</span>
+                <img src="logo.png" alt="VitelisStore logo" />
+                <span>Store</span>
             </div>
 
             <nav class="nav" id="mainNav">
@@ -700,7 +716,7 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-badge">
-                    <span class="big-icon"><i class="fas fa-spa"></i></span>
+                    <img src="logo.png" alt="VitelisStore" />
                     <p>100% Naturel &amp; Local</p>
                     <span style="font-size:0.8rem;color:var(--gris-texte);">Ouagadougou 🇧🇫</span>
                 </div>
@@ -742,8 +758,8 @@
 
                 <!-- Carte 1 : Bucco Fraîche -->
                 <div class="produit-card" data-produit="bucco">
-                    <div class="card-img" style="background:#e6efe5;">
-                        <span style="font-size:5rem;">🪥</span>
+                    <div class="card-img">
+                        <img src="buco%20fraiche.png" alt="Bucco Fraîche" />
                         <span class="badge-cat">Bucco-dentaire</span>
                     </div>
                     <div class="card-body">
@@ -758,8 +774,8 @@
 
                 <!-- Carte 2 : Souple Éclat -->
                 <div class="produit-card" data-produit="souple">
-                    <div class="card-img" style="background:#e3eee3;">
-                        <span style="font-size:5rem;">🌿</span>
+                    <div class="card-img">
+                        <img src="souple%20eclat.png" alt="Souple Éclat" />
                         <span class="badge-cat">Capillaire</span>
                     </div>
                     <div class="card-body">
@@ -823,7 +839,7 @@
                 nom: 'Bucco Fraîche',
                 prix: '5 000 FCFA',
                 categorie: 'Soin Bucco-dentaire',
-                emoji: '🪥',
+                image: 'buco%20fraiche.png',
                 description: 'Bain de bouche 100 % naturel contre la mauvaise haleine.',
                 utilisation: '3 fois par semaine pendant 2 semaines (après brossage le soir), puis 1 fois par semaine. Utilisation à partir de 12 ans.',
                 composition: 'Extrait de plantes, écorce de palmier, extrait de jasmin.',
@@ -834,7 +850,7 @@
                 nom: 'Souple Éclat',
                 prix: '2 500 FCFA',
                 categorie: 'Soin Capillaire',
-                emoji: '🌿',
+                image: 'souple%20eclat.png',
                 description: 'Soin organique anti-pelliculaire & pousse des cheveux.',
                 utilisation: 'Appliquer sur cheveux humides, masser doucement, laisser poser 10 min puis rincer. Utiliser 2 à 3 fois par semaine.',
                 composition: 'Beurre de karité, menthol, huile de menthe poivrée, soufre.',
@@ -854,7 +870,7 @@
             if (!p) return;
 
             modalBody.innerHTML = `
-                <div class="modal-img">${p.emoji}</div>
+                <div class="modal-img"><img src="${p.image}" alt="${p.nom}" /></div>
                 <div class="modal-titre">${p.nom}</div>
                 <div class="modal-prix">${p.prix}</div>
                 <p style="color:var(--gris-texte);margin-bottom:12px;">${p.description}</p>
@@ -910,7 +926,7 @@
             });
         });
 
-        // ---- Activer le lien de navigation selon le scroll (simple) ----
+        // ---- Activer le lien de navigation selon le scroll ----
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav a');
 
@@ -931,10 +947,9 @@
         }
 
         window.addEventListener('scroll', updateActiveLink);
-        // petit déclenchement initial
         setTimeout(updateActiveLink, 100);
 
-        console.log('🌿 VitelisStore — Bienvenue !');
+        console.log('🌿 VitelisStore — avec vos images !');
     </script>
 
 </body>
