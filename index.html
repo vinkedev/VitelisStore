@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VitelisStore – Soins Naturels, Beauté & Bien-être</title>
+    <title>VitelisStore – Soins Naturels & Bien-être</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         /* ===== RESET & BASE ===== */
         * {
@@ -12,39 +15,37 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         :root {
             --vert: #1B4D2E;
             --vert-clair: #2a6e42;
+            --vert-fonce: #143a23;
             --dore: #C5A059;
             --dore-clair: #dbb87c;
             --fond: #F9FBF8;
             --blanc: #ffffff;
             --gris-texte: #3d4a44;
+            --gris-clair: #e9ecef;
             --ombre: 0 8px 30px rgba(27, 77, 46, 0.10);
-            --transition: 0.3s ease;
+            --ombre-hover: 0 16px 48px rgba(27, 77, 46, 0.18);
+            --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --radius: 20px;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: var(--fond);
             color: var(--gris-texte);
             line-height: 1.6;
+            overflow-x: hidden;
         }
-
-        a {
-            text-decoration: none;
-            color: inherit;
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
         }
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        ul { list-style: none; }
         .container {
             max-width: 1240px;
             margin: 0 auto;
@@ -55,6 +56,7 @@
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             padding: 14px 34px;
             border-radius: 60px;
@@ -66,6 +68,7 @@
             background: var(--vert);
             color: #fff;
             box-shadow: 0 4px 14px rgba(27, 77, 46, 0.25);
+            font-family: 'Montserrat', sans-serif;
         }
         .btn:hover {
             background: var(--vert-clair);
@@ -98,7 +101,69 @@
         .btn-outline:hover {
             background: var(--vert);
             color: #fff;
-            transform: translateY(-3px);
+        }
+
+        /* ===== LOADER ===== */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--fond);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            gap: 20px;
+        }
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loader-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 5px solid rgba(27, 77, 46, 0.1);
+            border-top: 5px solid var(--vert);
+            border-right: 5px solid var(--dore);
+            animation: spin 0.9s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+            position: relative;
+        }
+        .loader-circle::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border-radius: 50%;
+            border: 3px solid rgba(197, 160, 89, 0.15);
+            border-bottom: 3px solid var(--dore);
+            animation: spin 0.6s linear infinite reverse;
+        }
+        .loader-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--vert);
+            letter-spacing: 2px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .loader-text span {
+            color: var(--dore);
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.03); }
         }
 
         /* ===== TOP BAR ===== */
@@ -115,9 +180,7 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-        .top-bar i {
-            color: var(--dore);
-        }
+        .top-bar i { color: var(--dore); }
 
         /* ===== HEADER ===== */
         .header {
@@ -148,9 +211,7 @@
             width: auto;
             object-fit: contain;
         }
-        .logo span {
-            color: var(--dore);
-        }
+        .logo span { color: var(--dore); }
 
         .nav {
             display: flex;
@@ -174,19 +235,13 @@
             background: var(--dore);
             transition: var(--transition);
         }
-        .nav a:hover {
-            color: var(--vert);
-        }
-        .nav a:hover::after {
-            width: 100%;
-        }
+        .nav a:hover { color: var(--vert); }
+        .nav a:hover::after { width: 100%; }
         .nav a.actif {
             color: var(--vert);
             font-weight: 600;
         }
-        .nav a.actif::after {
-            width: 100%;
-        }
+        .nav a.actif::after { width: 100%; }
 
         .header-actions {
             display: flex;
@@ -198,9 +253,7 @@
             font-size: 1.2rem;
             transition: var(--transition);
         }
-        .header-actions a:hover {
-            color: var(--vert);
-        }
+        .header-actions a:hover { color: var(--vert); }
 
         .hamburger {
             display: none;
@@ -230,9 +283,7 @@
             line-height: 1.2;
             margin-bottom: 8px;
         }
-        .hero-content h1 span {
-            color: var(--dore);
-        }
+        .hero-content h1 span { color: var(--dore); }
         .hero-slogan {
             font-size: 1.3rem;
             color: var(--gris-texte);
@@ -240,10 +291,7 @@
             font-weight: 300;
             letter-spacing: 1px;
         }
-        .hero-slogan i {
-            color: var(--dore);
-            margin-right: 6px;
-        }
+        .hero-slogan i { color: var(--dore); margin-right: 6px; }
         .hero-cta {
             display: flex;
             gap: 16px;
@@ -329,9 +377,7 @@
             margin-bottom: 40px;
             font-size: 1.1rem;
         }
-        .section-sub i {
-            color: var(--dore);
-        }
+        .section-sub i { color: var(--dore); }
 
         .produits-grid {
             display: grid;
@@ -341,16 +387,17 @@
 
         .produit-card {
             background: var(--blanc);
-            border-radius: 28px;
+            border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--ombre);
             transition: var(--transition);
-            cursor: pointer;
             border: 1px solid rgba(197, 160, 89, 0.10);
+            display: flex;
+            flex-direction: column;
         }
         .produit-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 16px 48px rgba(27, 77, 46, 0.12);
+            box-shadow: var(--ombre-hover);
         }
         .produit-card .card-img {
             height: 240px;
@@ -383,6 +430,9 @@
         }
         .produit-card .card-body {
             padding: 24px 26px 28px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         .produit-card .card-body h3 {
             font-size: 1.5rem;
@@ -399,10 +449,20 @@
             color: var(--gris-texte);
             font-size: 0.95rem;
             margin-bottom: 16px;
+            flex: 1;
         }
-        .produit-card .card-body .btn {
-            width: 100%;
-            justify-content: center;
+        .produit-card .card-body .product-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: auto;
+        }
+        .produit-card .card-body .product-actions .btn {
+            padding: 12px 10px;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            text-transform: none;
+            font-weight: 600;
         }
 
         /* ===== MODAL ===== */
@@ -410,8 +470,8 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
             z-index: 999;
             align-items: center;
             justify-content: center;
@@ -433,14 +493,8 @@
             animation: fadeUp 0.3s ease;
         }
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .modal-close {
             position: absolute;
@@ -493,14 +547,12 @@
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .modal .modal-section h4 i {
-            color: var(--dore);
-        }
+        .modal .modal-section h4 i { color: var(--dore); }
         .modal .modal-section p,
         .modal .modal-section li {
             color: var(--gris-texte);
@@ -529,13 +581,90 @@
             padding: 16px;
             font-size: 1.1rem;
         }
+        .modal .modal-features {
+            margin-top: 20px;
+        }
+        .modal .modal-features ul li::before {
+            content: '✓';
+            color: var(--dore);
+            font-weight: bold;
+            font-size: 1.2rem;
+            left: 0;
+        }
+        .modal .modal-features ul li {
+            padding-left: 28px;
+        }
+
+        /* ===== TÉMOIGNAGES ===== */
+        .testimonials {
+            background: var(--vert);
+            color: white;
+            padding: 60px 0;
+        }
+        .testimonials .section-title { color: white; }
+        .testimonials .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--dore);
+            margin: 10px auto 0;
+        }
+        .testimonials .section-sub { color: rgba(255,255,255,0.8); }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .testimonial-card {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius);
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: var(--transition);
+        }
+        .testimonial-card:hover {
+            border-color: var(--dore);
+            transform: translateY(-5px);
+        }
+        .testimonial-card p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .testimonial-card .client {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .testimonial-card .client .avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--dore);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--vert);
+            font-size: 1.2rem;
+        }
+        .testimonial-card .client .name {
+            font-weight: 600;
+            color: white;
+        }
+        .testimonial-card .client .stars {
+            color: #FFD700;
+            letter-spacing: 2px;
+        }
 
         /* ===== FOOTER ===== */
         .footer {
-            background: var(--vert);
+            background: var(--vert-fonce);
             color: rgba(255, 255, 255, 0.85);
             padding: 40px 0 30px;
-            margin-top: 20px;
         }
         .footer-inner {
             display: flex;
@@ -554,9 +683,7 @@
             color: rgba(255, 255, 255, 0.7);
             transition: var(--transition);
         }
-        .footer-col a:hover {
-            color: var(--dore);
-        }
+        .footer-col a:hover { color: var(--dore); }
         .footer-col .socials {
             display: flex;
             gap: 14px;
@@ -566,9 +693,7 @@
         .footer-col .socials a {
             color: rgba(255, 255, 255, 0.7);
         }
-        .footer-col .socials a:hover {
-            color: var(--dore);
-        }
+        .footer-col .socials a:hover { color: var(--dore); }
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.10);
             margin-top: 30px;
@@ -578,44 +703,58 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: var(--transition);
+            animation: float 3s ease-in-out infinite;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.5);
+            animation: none;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
             .hero-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            .hero-cta {
-                justify-content: center;
-            }
-            .hero-content h1 {
-                font-size: 2.6rem;
-            }
-            .produits-grid {
-                gap: 28px;
-            }
+            .hero-cta { justify-content: center; }
+            .hero-content h1 { font-size: 2.6rem; }
+            .produits-grid { gap: 28px; }
         }
-
         @media (max-width: 768px) {
-            .hamburger {
-                display: block;
-            }
+            .hamburger { display: block; }
             .nav {
                 display: none;
                 flex-direction: column;
                 gap: 12px;
                 width: 100%;
                 padding: 16px 0 8px;
-                border-top: 1px solid rgba(0, 0, 0, 0.05);
+                border-top: 1px solid rgba(0,0,0,0.05);
             }
-            .nav.ouvert {
-                display: flex;
-            }
-            .header-inner {
-                flex-wrap: wrap;
-            }
-            .header-actions {
-                margin-left: auto;
-            }
+            .nav.ouvert { display: flex; }
+            .header-inner { flex-wrap: wrap; }
+            .header-actions { margin-left: auto; }
             .produits-grid {
                 grid-template-columns: 1fr;
                 max-width: 480px;
@@ -625,48 +764,36 @@
                 grid-template-columns: 1fr;
                 gap: 16px;
             }
-            .modal {
-                padding: 28px 20px;
-            }
-            .modal .modal-titre {
-                font-size: 1.6rem;
-            }
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
-            .section-title {
-                font-size: 2rem;
-            }
+            .modal { padding: 28px 20px; }
+            .modal .modal-titre { font-size: 1.6rem; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .section-title { font-size: 2rem; }
             .footer-inner {
                 flex-direction: column;
                 text-align: center;
             }
-            .footer-col .socials {
-                justify-content: center;
+            .footer-col .socials { justify-content: center; }
+            .produit-card .card-body .product-actions {
+                grid-template-columns: 1fr;
             }
         }
-
         @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 1.8rem;
-            }
-            .btn {
-                padding: 12px 24px;
-                font-size: 0.9rem;
-            }
-            .top-bar {
-                font-size: 0.75rem;
-            }
-            .produit-card .card-img {
-                height: 180px;
-            }
-            .modal .modal-img {
-                height: 160px;
-            }
+            .hero-content h1 { font-size: 1.8rem; }
+            .btn { padding: 12px 24px; font-size: 0.9rem; }
+            .top-bar { font-size: 0.75rem; }
+            .produit-card .card-img { height: 180px; }
+            .modal .modal-img { height: 160px; }
+            .whatsapp-float { width: 52px; height: 52px; font-size: 24px; bottom: 20px; right: 20px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- ===== LOADER ===== -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-circle"></div>
+        <div class="loader-text">Vitelis<span>Store</span></div>
+    </div>
 
     <!-- ===== TOP BAR ===== -->
     <div class="top-bar">
@@ -680,18 +807,16 @@
     <header class="header">
         <div class="container header-inner">
             <div class="logo">
-                <img src="logo.png" alt="VitelisStore logo" />
+                <img src="logo.png" alt="VitelisStore" />
                 <span>Store</span>
             </div>
-
             <nav class="nav" id="mainNav">
                 <a href="#hero" class="actif">Accueil</a>
                 <a href="#catalogue">Gamme Capillaire</a>
                 <a href="#catalogue">Gamme Bucco-Dentaire</a>
-                <a href="#footer">À Propos</a>
+                <a href="#temoignages">Avis</a>
                 <a href="#footer">Contact</a>
             </nav>
-
             <div class="header-actions">
                 <a href="#" aria-label="Panier"><i class="fas fa-shopping-bag"></i></a>
                 <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -753,41 +878,48 @@
                 <i class="fas fa-leaf" style="color:var(--dore);"></i>
                 Des soins authentiques, conçus avec des ingrédients naturels
             </p>
+            <div class="produits-grid" id="produitsGrid">
+                <!-- Rempli par JS -->
+            </div>
+        </div>
+    </section>
 
-            <div class="produits-grid">
-
-                <!-- Carte 1 : Bucco Fraîche -->
-                <div class="produit-card" data-produit="bucco">
-                    <div class="card-img">
-                        <img src="buco%20fraiche.png" alt="Bucco Fraîche" />
-                        <span class="badge-cat">Bucco-dentaire</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Bucco Fraîche</h3>
-                        <div class="prix">5 000 FCFA</div>
-                        <p class="extrait">Bain de bouche naturel contre la mauvaise haleine.</p>
-                        <button class="btn btn-dore" onclick="ouvrirModal('bucco')">
-                            <i class="fas fa-eye"></i> Voir le produit
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Carte 2 : Souple Éclat -->
-                <div class="produit-card" data-produit="souple">
-                    <div class="card-img">
-                        <img src="souple%20eclat.png" alt="Souple Éclat" />
-                        <span class="badge-cat">Capillaire</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Souple Éclat</h3>
-                        <div class="prix">2 500 FCFA</div>
-                        <p class="extrait">Soin organique anti-pelliculaire &amp; pousse des cheveux.</p>
-                        <button class="btn btn-dore" onclick="ouvrirModal('souple')">
-                            <i class="fas fa-eye"></i> Voir le produit
-                        </button>
+    <!-- ===== TÉMOIGNAGES ===== -->
+    <section class="testimonials" id="temoignages">
+        <div class="container">
+            <h2 class="section-title">Ce qu'ils disent de nous</h2>
+            <p class="section-sub">Des clients satisfaits de nos soins naturels</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>"Le bain de bouche Bucco Fraîche a changé ma routine. Plus de mauvaise haleine, une sensation de fraîcheur durable."</p>
+                    <div class="client">
+                        <div class="avatar">MF</div>
+                        <div>
+                            <div class="name">Mariam F.</div>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
                     </div>
                 </div>
-
+                <div class="testimonial-card">
+                    <p>"Souple Éclat a redonné vie à mes cheveux. Ils sont plus forts et brillants. Je recommande à toutes mes amies."</p>
+                    <div class="client">
+                        <div class="avatar">AT</div>
+                        <div>
+                            <div class="name">Aminata T.</div>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Enfin des produits naturels qui fonctionnent vraiment. Livraison rapide et service client au top."</p>
+                    <div class="client">
+                        <div class="avatar">KD</div>
+                        <div>
+                            <div class="name">Karim D.</div>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -797,7 +929,7 @@
         <div class="modal" id="modalContent">
             <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
             <div id="modalBody">
-                <!-- Rempli dynamiquement par JS -->
+                <!-- Rempli par JS -->
             </div>
         </div>
     </div>
@@ -813,7 +945,7 @@
                 <h4>Liens rapides</h4>
                 <a href="#hero">Accueil</a><br />
                 <a href="#catalogue">Nos produits</a><br />
-                <a href="#footer">À propos</a>
+                <a href="#temoignages">Avis</a>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
@@ -831,11 +963,25 @@
         </div>
     </footer>
 
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/22668330283" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ---- Données produits ----
-        const produits = {
+        // ===== CACHER LE LOADER =====
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('pageLoader');
+            setTimeout(function() {
+                loader.classList.add('hidden');
+            }, 800);
+        });
+
+        // ===== DONNÉES PRODUITS =====
+        const produitsData = {
             bucco: {
+                id: 'bucco',
                 nom: 'Bucco Fraîche',
                 prix: '5 000 FCFA',
                 categorie: 'Soin Bucco-dentaire',
@@ -847,6 +993,7 @@
                 message: 'Bonjour VitelisStore, je souhaite commander Bucco Fraîche (5 000 FCFA)'
             },
             souple: {
+                id: 'souple',
                 nom: 'Souple Éclat',
                 prix: '2 500 FCFA',
                 categorie: 'Soin Capillaire',
@@ -859,16 +1006,49 @@
             }
         };
 
-        // ---- Références DOM ----
-        const overlay = document.getElementById('modalOverlay');
-        const modalBody = document.getElementById('modalBody');
-        const closeBtn = document.getElementById('modalClose');
+        // ===== GÉNÉRATION DES CARTES =====
+        function genererCartes() {
+            const grid = document.getElementById('produitsGrid');
+            grid.innerHTML = '';
+            Object.values(produitsData).forEach(p => {
+                const whatsappLink = `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}`;
+                const card = document.createElement('div');
+                card.className = 'produit-card';
+                card.innerHTML = `
+                    <div class="card-img">
+                        <img src="${p.image}" alt="${p.nom}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300/1B4D2E/FFFFFF?text=${p.nom}'">
+                        <span class="badge-cat">${p.categorie}</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>${p.nom}</h3>
+                        <div class="prix">${p.prix}</div>
+                        <p class="extrait">${p.description}</p>
+                        <div class="product-actions">
+                            <button class="btn btn-dore" data-id="${p.id}">
+                                <i class="fas fa-eye"></i> Voir
+                            </button>
+                            <a href="${whatsappLink}" class="btn btn-whatsapp" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Commander
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
 
-        // ---- Ouvrir modal ----
+                // Événement "Voir" -> ouvre la modale
+                card.querySelector('.btn-dore').addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    ouvrirModal(id);
+                });
+            });
+        }
+
+        // ===== MODALE =====
         function ouvrirModal(id) {
-            const p = produits[id];
+            const p = produitsData[id];
             if (!p) return;
 
+            const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = `
                 <div class="modal-img"><img src="${p.image}" alt="${p.nom}" /></div>
                 <div class="modal-titre">${p.nom}</div>
@@ -887,6 +1067,16 @@
                     </ul>
                 </div>
 
+                <div class="modal-features">
+                    <h4><i class="fas fa-check-circle" style="color:var(--dore);"></i> Pourquoi choisir VitelisStore ?</h4>
+                    <ul>
+                        <li>Ingrédients 100% naturels</li>
+                        <li>Fabriqué localement à Ouagadougou</li>
+                        <li>Garantie satisfaction</li>
+                        <li>Livraison disponible sur tout le Burkina</li>
+                    </ul>
+                </div>
+
                 <a href="https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}"
                    target="_blank"
                    class="btn btn-whatsapp">
@@ -894,42 +1084,52 @@
                 </a>
             `;
 
-            overlay.classList.add('ouvert');
+            document.getElementById('modalOverlay').classList.add('ouvert');
             document.body.style.overflow = 'hidden';
         }
 
-        // ---- Fermer modal ----
         function fermerModal() {
-            overlay.classList.remove('ouvert');
+            document.getElementById('modalOverlay').classList.remove('ouvert');
             document.body.style.overflow = '';
         }
 
-        // ---- Événements ----
-        closeBtn.addEventListener('click', fermerModal);
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) fermerModal();
+        // ===== ÉVÉNEMENTS MODALE =====
+        document.getElementById('modalClose').addEventListener('click', fermerModal);
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) fermerModal();
         });
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') fermerModal();
         });
 
-        // ---- Hamburger (mobile) ----
-        document.getElementById('hamburger').addEventListener('click', () => {
+        // ===== MENU MOBILE =====
+        document.getElementById('hamburger').addEventListener('click', function() {
             const nav = document.getElementById('mainNav');
             nav.classList.toggle('ouvert');
         });
-
-        // ---- Fermer le menu mobile au clic sur un lien ----
         document.querySelectorAll('.nav a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('mainNav').classList.remove('ouvert');
             });
         });
 
-        // ---- Activer le lien de navigation selon le scroll ----
+        // ===== SMOOTH SCROLL POUR LES LIENS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(targetId);
+                if (target) {
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    window.scrollTo({ top: target.offsetTop - headerHeight, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ===== ACTIVER LE LIEN DE NAVIGATION AU SCROLL =====
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav a');
-
         function updateActiveLink() {
             let current = '';
             sections.forEach(section => {
@@ -945,12 +1145,14 @@
                 }
             });
         }
-
         window.addEventListener('scroll', updateActiveLink);
-        setTimeout(updateActiveLink, 100);
+        setTimeout(updateActiveLink, 200);
 
-        console.log('🌿 VitelisStore — avec vos images !');
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', function() {
+            genererCartes();
+            console.log('🌿 VitelisStore prêt !');
+        });
     </script>
-
 </body>
 </html>
