@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VitelisStore – Soins Naturels, Beauté & Bien-être</title>
+    <!-- Font Awesome (icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vert: #1B4D2E;
+            --vert-clair: #2a6e42;
+            --dore: #C5A059;
+            --dore-clair: #dbb87c;
+            --fond: #F9FBF8;
+            --blanc: #ffffff;
+            --gris-texte: #3d4a44;
+            --ombre: 0 8px 30px rgba(27, 77, 46, 0.10);
+            --transition: 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--fond);
+            color: var(--gris-texte);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== BOUTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 34px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--vert);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(27, 77, 46, 0.25);
+        }
+        .btn:hover {
+            background: var(--vert-clair);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(27, 77, 46, 0.35);
+        }
+        .btn-dore {
+            background: var(--dore);
+            box-shadow: 0 4px 14px rgba(197, 160, 89, 0.30);
+        }
+        .btn-dore:hover {
+            background: var(--dore-clair);
+            box-shadow: 0 8px 24px rgba(197, 160, 89, 0.45);
+        }
+        .btn-whatsapp {
+            background: #25D366;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.30);
+        }
+        .btn-whatsapp:hover {
+            background: #1da851;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.40);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--vert);
+            color: var(--vert);
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: var(--vert);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: var(--vert);
+            color: #fff;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 8px 16px;
+            letter-spacing: 0.3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .top-bar i {
+            color: var(--dore);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--blanc);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--vert);
+        }
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--dore);
+        }
+        .logo span {
+            color: var(--dore);
+        }
+
+        .nav {
+            display: flex;
+            gap: 28px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: var(--gris-texte);
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--dore);
+            transition: var(--transition);
+        }
+        .nav a:hover {
+            color: var(--vert);
+        }
+        .nav a:hover::after {
+            width: 100%;
+        }
+        .nav a.actif {
+            color: var(--vert);
+            font-weight: 600;
+        }
+        .nav a.actif::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-actions a {
+            color: var(--gris-texte);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        .header-actions a:hover {
+            color: var(--vert);
+        }
+
+        /* Hamburger (mobile) */
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--vert);
+            cursor: pointer;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 60px 0 70px;
+            background: linear-gradient(145deg, #f2f7f2 0%, var(--fond) 100%);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--vert);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .hero-content h1 span {
+            color: var(--dore);
+        }
+        .hero-slogan {
+            font-size: 1.3rem;
+            color: var(--gris-texte);
+            margin-bottom: 24px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        .hero-slogan i {
+            color: var(--dore);
+            margin-right: 6px;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .hero-badge {
+            background: var(--blanc);
+            padding: 20px 28px;
+            border-radius: 20px;
+            box-shadow: var(--ombre);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            border-left: 6px solid var(--dore);
+        }
+        .hero-badge .big-icon {
+            font-size: 4rem;
+            color: var(--dore);
+        }
+        .hero-badge p {
+            font-weight: 500;
+            color: var(--vert);
+            font-size: 1.1rem;
+        }
+
+        /* ===== REASSURANCE ===== */
+        .reassurance {
+            padding: 50px 0 40px;
+            background: var(--blanc);
+        }
+        .reassurance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .reassurance-item {
+            padding: 20px 12px;
+            border-radius: 20px;
+            transition: var(--transition);
+            background: var(--fond);
+        }
+        .reassurance-item:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--ombre);
+        }
+        .reassurance-item .icon {
+            font-size: 2.8rem;
+            color: var(--dore);
+            margin-bottom: 10px;
+        }
+        .reassurance-item h3 {
+            color: var(--vert);
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .reassurance-item p {
+            font-size: 0.9rem;
+            color: var(--gris-texte);
+        }
+
+        /* ===== CATALOGUE ===== */
+        .catalogue {
+            padding: 60px 0 70px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--vert);
+            margin-bottom: 10px;
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--gris-texte);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        .section-sub i {
+            color: var(--dore);
+        }
+
+        .produits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        /* Carte produit */
+        .produit-card {
+            background: var(--blanc);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--ombre);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid rgba(197, 160, 89, 0.10);
+        }
+        .produit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 48px rgba(27, 77, 46, 0.12);
+        }
+        .produit-card .card-img {
+            height: 220px;
+            background: #edf3ec;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            color: var(--vert);
+            position: relative;
+            border-bottom: 3px solid var(--dore);
+        }
+        .produit-card .card-img .badge-cat {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--dore);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .produit-card .card-body {
+            padding: 24px 26px 28px;
+        }
+        .produit-card .card-body h3 {
+            font-size: 1.5rem;
+            color: var(--vert);
+            margin-bottom: 2px;
+        }
+        .produit-card .card-body .prix {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dore);
+            margin-bottom: 8px;
+        }
+        .produit-card .card-body .extrait {
+            color: var(--gris-texte);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+        .produit-card .card-body .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.ouvert {
+            display: flex;
+        }
+        .modal {
+            background: var(--blanc);
+            max-width: 720px;
+            width: 100%;
+            border-radius: 36px;
+            padding: 40px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+            animation: fadeUp 0.3s ease;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--gris-texte);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .modal-close:hover {
+            color: var(--vert);
+            transform: rotate(90deg);
+        }
+        .modal .modal-img {
+            font-size: 5rem;
+            color: var(--vert);
+            background: #edf3ec;
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px dashed rgba(197, 160, 89, 0.25);
+        }
+        .modal .modal-titre {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--vert);
+        }
+        .modal .modal-prix {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dore);
+            margin: 4px 0 16px;
+        }
+        .modal .modal-section {
+            margin-top: 18px;
+        }
+        .modal .modal-section h4 {
+            color: var(--vert);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal .modal-section h4 i {
+            color: var(--dore);
+        }
+        .modal .modal-section p,
+        .modal .modal-section li {
+            color: var(--gris-texte);
+            font-size: 0.95rem;
+        }
+        .modal .modal-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .modal .modal-section ul li {
+            padding: 4px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        .modal .modal-section ul li::before {
+            content: '🌿';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            font-size: 0.9rem;
+        }
+        .modal .btn-whatsapp {
+            width: 100%;
+            justify-content: center;
+            margin-top: 24px;
+            padding: 16px;
+            font-size: 1.1rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--vert);
+            color: rgba(255, 255, 255, 0.85);
+            padding: 40px 0 30px;
+            margin-top: 20px;
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .footer-col h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .footer-col p,
+        .footer-col a {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+        .footer-col a:hover {
+            color: var(--dore);
+        }
+        .footer-col .socials {
+            display: flex;
+            gap: 14px;
+            font-size: 1.4rem;
+            margin-top: 8px;
+        }
+        .footer-col .socials a {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .footer-col .socials a:hover {
+            color: var(--dore);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .hero-content h1 {
+                font-size: 2.6rem;
+            }
+            .produits-grid {
+                gap: 28px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .nav {
+                display: none;
+                flex-direction: column;
+                gap: 12px;
+                width: 100%;
+                padding: 16px 0 8px;
+                border-top: 1px solid rgba(0, 0, 0, 0.05);
+            }
+            .nav.ouvert {
+                display: flex;
+            }
+            .header-inner {
+                flex-wrap: wrap;
+            }
+            .header-actions {
+                margin-left: auto;
+            }
+            .produits-grid {
+                grid-template-columns: 1fr;
+                max-width: 480px;
+                margin: 0 auto;
+            }
+            .reassurance-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .modal {
+                padding: 28px 20px;
+            }
+            .modal .modal-titre {
+                font-size: 1.6rem;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-col .socials {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+            .top-bar {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="top-bar">
+        <i class="fas fa-truck"></i>
+        Livraison disponible à Ouagadougou et partout au Burkina Faso
+        <span style="margin:0 4px;">🇧🇫</span>
+        <i class="fas fa-leaf" style="margin-left:12px;color:var(--dore);"></i>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo">
+                <span class="logo-icon"><i class="fas fa-seedling"></i></span>
+                Vitelis<span>Store</span>
+            </div>
+
+            <nav class="nav" id="mainNav">
+                <a href="#hero" class="actif">Accueil</a>
+                <a href="#catalogue">Gamme Capillaire</a>
+                <a href="#catalogue">Gamme Bucco-Dentaire</a>
+                <a href="#footer">À Propos</a>
+                <a href="#footer">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#" aria-label="Panier"><i class="fas fa-shopping-bag"></i></a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>Soins Naturels,<br /><span>Beauté &amp; Bien-être</span></h1>
+                <p class="hero-slogan">
+                    <i class="fas fa-leaf"></i> Naturellement, pour vous.
+                </p>
+                <div class="hero-cta">
+                    <a href="#catalogue" class="btn">Découvrir nos produits <i class="fas fa-arrow-right"></i></a>
+                    <a href="#catalogue" class="btn btn-outline">Voir la gamme</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-badge">
+                    <span class="big-icon"><i class="fas fa-spa"></i></span>
+                    <p>100% Naturel &amp; Local</p>
+                    <span style="font-size:0.8rem;color:var(--gris-texte);">Ouagadougou 🇧🇫</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== REASSURANCE ===== -->
+    <section class="reassurance">
+        <div class="container reassurance-grid">
+            <div class="reassurance-item">
+                <div class="icon"><i class="fas fa-seedling"></i></div>
+                <h3>🍃 100% Naturel</h3>
+                <p>Extraits de plantes &amp; beurre de karité</p>
+            </div>
+            <div class="reassurance-item">
+                <div class="icon"><i class="fas fa-flask"></i></div>
+                <h3>💧 Sans produits toxiques</h3>
+                <p>Formulations pures &amp; saines</p>
+            </div>
+            <div class="reassurance-item">
+                <div class="icon"><i class="fas fa-store"></i></div>
+                <h3>📍 Boutique locale</h3>
+                <p>Ouagadougou, Burkina Faso</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CATALOGUE ===== -->
+    <section class="catalogue" id="catalogue">
+        <div class="container">
+            <h2 class="section-title">Nos Produits</h2>
+            <p class="section-sub">
+                <i class="fas fa-leaf" style="color:var(--dore);"></i>
+                Des soins authentiques, conçus avec des ingrédients naturels
+            </p>
+
+            <div class="produits-grid">
+
+                <!-- Carte 1 : Bucco Fraîche -->
+                <div class="produit-card" data-produit="bucco">
+                    <div class="card-img" style="background:#e6efe5;">
+                        <span style="font-size:5rem;">🪥</span>
+                        <span class="badge-cat">Bucco-dentaire</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Bucco Fraîche</h3>
+                        <div class="prix">5 000 FCFA</div>
+                        <p class="extrait">Bain de bouche naturel contre la mauvaise haleine.</p>
+                        <button class="btn btn-dore" onclick="ouvrirModal('bucco')">
+                            <i class="fas fa-eye"></i> Voir le produit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Carte 2 : Souple Éclat -->
+                <div class="produit-card" data-produit="souple">
+                    <div class="card-img" style="background:#e3eee3;">
+                        <span style="font-size:5rem;">🌿</span>
+                        <span class="badge-cat">Capillaire</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Souple Éclat</h3>
+                        <div class="prix">2 500 FCFA</div>
+                        <p class="extrait">Soin organique anti-pelliculaire &amp; pousse des cheveux.</p>
+                        <button class="btn btn-dore" onclick="ouvrirModal('souple')">
+                            <i class="fas fa-eye"></i> Voir le produit
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent">
+            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div id="modalBody">
+                <!-- Rempli dynamiquement par JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" id="footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <h4><i class="fas fa-seedling" style="color:var(--dore);"></i> VitelisStore</h4>
+                <p>Soins naturels &amp; bien-être<br />Fabriqué à Ouagadougou 🇧🇫</p>
+            </div>
+            <div class="footer-col">
+                <h4>Liens rapides</h4>
+                <a href="#hero">Accueil</a><br />
+                <a href="#catalogue">Nos produits</a><br />
+                <a href="#footer">À propos</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p><i class="fas fa-phone" style="color:var(--dore);"></i> +226 68 33 02 83</p>
+                <p><i class="fas fa-phone" style="color:var(--dore);"></i> +226 64 69 47 48</p>
+                <div class="socials">
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            &copy; 2026 VitelisStore — Tous droits réservés.
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ---- Données produits ----
+        const produits = {
+            bucco: {
+                nom: 'Bucco Fraîche',
+                prix: '5 000 FCFA',
+                categorie: 'Soin Bucco-dentaire',
+                emoji: '🪥',
+                description: 'Bain de bouche 100 % naturel contre la mauvaise haleine.',
+                utilisation: '3 fois par semaine pendant 2 semaines (après brossage le soir), puis 1 fois par semaine. Utilisation à partir de 12 ans.',
+                composition: 'Extrait de plantes, écorce de palmier, extrait de jasmin.',
+                whatsapp: '+22668330283',
+                message: 'Bonjour VitelisStore, je souhaite commander Bucco Fraîche (5 000 FCFA)'
+            },
+            souple: {
+                nom: 'Souple Éclat',
+                prix: '2 500 FCFA',
+                categorie: 'Soin Capillaire',
+                emoji: '🌿',
+                description: 'Soin organique anti-pelliculaire & pousse des cheveux.',
+                utilisation: 'Appliquer sur cheveux humides, masser doucement, laisser poser 10 min puis rincer. Utiliser 2 à 3 fois par semaine.',
+                composition: 'Beurre de karité, menthol, huile de menthe poivrée, soufre.',
+                whatsapp: '+22668330283',
+                message: 'Bonjour VitelisStore, je souhaite commander Souple Éclat (2 500 FCFA)'
+            }
+        };
+
+        // ---- Références DOM ----
+        const overlay = document.getElementById('modalOverlay');
+        const modalBody = document.getElementById('modalBody');
+        const closeBtn = document.getElementById('modalClose');
+
+        // ---- Ouvrir modal ----
+        function ouvrirModal(id) {
+            const p = produits[id];
+            if (!p) return;
+
+            modalBody.innerHTML = `
+                <div class="modal-img">${p.emoji}</div>
+                <div class="modal-titre">${p.nom}</div>
+                <div class="modal-prix">${p.prix}</div>
+                <p style="color:var(--gris-texte);margin-bottom:12px;">${p.description}</p>
+
+                <div class="modal-section">
+                    <h4><i class="fas fa-clock"></i> Posologie & Utilisation</h4>
+                    <p>${p.utilisation}</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4><i class="fas fa-flask"></i> Composition</h4>
+                    <ul>
+                        ${p.composition.split(',').map(item => `<li>${item.trim()}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <a href="https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}"
+                   target="_blank"
+                   class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Commander via WhatsApp
+                </a>
+            `;
+
+            overlay.classList.add('ouvert');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ---- Fermer modal ----
+        function fermerModal() {
+            overlay.classList.remove('ouvert');
+            document.body.style.overflow = '';
+        }
+
+        // ---- Événements ----
+        closeBtn.addEventListener('click', fermerModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) fermerModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') fermerModal();
+        });
+
+        // ---- Hamburger (mobile) ----
+        document.getElementById('hamburger').addEventListener('click', () => {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('ouvert');
+        });
+
+        // ---- Fermer le menu mobile au clic sur un lien ----
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mainNav').classList.remove('ouvert');
+            });
+        });
+
+        // ---- Activer le lien de navigation selon le scroll (simple) ----
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav a');
+
+        function updateActiveLink() {
+            let current = '';
+            sections.forEach(section => {
+                const top = section.offsetTop - 150;
+                if (window.scrollY >= top) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('actif');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('actif');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        // petit déclenchement initial
+        setTimeout(updateActiveLink, 100);
+
+        console.log('🌿 VitelisStore — Bienvenue !');
+    </script>
+
+</body>
+</html>
