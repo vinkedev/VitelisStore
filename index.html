@@ -25,9 +25,7 @@
             --fond: #F9FBF8;
             --blanc: #ffffff;
             --gris-texte: #3d4a44;
-            --gris-clair: #e9ecef;
             --ombre: 0 8px 30px rgba(27, 77, 46, 0.10);
-            --ombre-hover: 0 16px 48px rgba(27, 77, 46, 0.18);
             --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             --radius: 20px;
         }
@@ -104,38 +102,70 @@
             color: #fff;
         }
 
-        /* ===== LOADER ===== */
+        /* ===== LOADER PREMIUM ===== */
         .page-loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--fond);
+            background: linear-gradient(135deg, #f2f7f2 0%, #e8efe7 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-            gap: 20px;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            gap: 30px;
         }
         .page-loader.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-        .loader-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 5px solid rgba(27, 77, 46, 0.1);
-            border-top: 5px solid var(--vert);
-            border-right: 5px solid var(--accent);
-            animation: spin 0.9s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+        .loader-leaf {
             position: relative;
+            width: 80px;
+            height: 80px;
         }
-        .loader-circle::after {
+        .loader-leaf i {
+            position: absolute;
+            font-size: 2.2rem;
+            color: var(--vert);
+            animation: leafFloat 1.8s ease-in-out infinite;
+        }
+        .loader-leaf i:nth-child(1) {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 0s;
+            color: var(--accent);
+        }
+        .loader-leaf i:nth-child(2) {
+            bottom: 0;
+            left: 10%;
+            animation-delay: 0.3s;
+        }
+        .loader-leaf i:nth-child(3) {
+            bottom: 0;
+            right: 10%;
+            animation-delay: 0.6s;
+        }
+        @keyframes leafFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-20px) rotate(10deg) scale(1.1); opacity: 1; }
+        }
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid rgba(27, 77, 46, 0.08);
+            border-top: 4px solid var(--vert);
+            border-right: 4px solid var(--accent);
+            animation: spin 1.2s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+            position: absolute;
+        }
+        .loader-ring::after {
             content: '';
             position: absolute;
             top: 8px;
@@ -143,26 +173,52 @@
             right: 8px;
             bottom: 8px;
             border-radius: 50%;
-            border: 3px solid rgba(255, 107, 53, 0.15);
+            border: 3px solid rgba(255, 107, 53, 0.12);
             border-bottom: 3px solid var(--accent);
-            animation: spin 0.6s linear infinite reverse;
+            animation: spin 0.8s linear infinite reverse;
         }
         .loader-text {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--vert);
-            letter-spacing: 2px;
-            animation: pulse 1.5s ease-in-out infinite;
+            letter-spacing: 3px;
+            animation: pulseText 2s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .loader-text span { color: var(--accent); }
+        .loader-text i {
+            font-size: 1.4rem;
+            color: var(--accent);
+            animation: pulseText 1.5s ease-in-out infinite;
+        }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        @keyframes pulse {
+        @keyframes pulseText {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.03); }
+            50% { opacity: 0.7; transform: scale(1.02); }
+        }
+        .loader-dots {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .loader-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--vert);
+            animation: dotBounce 1.4s ease-in-out infinite;
+        }
+        .loader-dots span:nth-child(2) { animation-delay: 0.2s; background: var(--accent); }
+        .loader-dots span:nth-child(3) { animation-delay: 0.4s; background: var(--vert-clair); }
+        @keyframes dotBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
         }
 
         /* ===== TOP BAR ===== */
@@ -178,12 +234,15 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
         }
         .top-bar i { color: var(--accent); }
 
         /* ===== HEADER ===== */
         .header {
-            background: var(--blanc);
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(8px);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
             position: sticky;
             top: 0;
@@ -263,108 +322,137 @@
             cursor: pointer;
         }
 
-        /* ===== HERO AVEC SLIDER ===== */
+        /* ===== HERO AVEC SLIDER EN FOND ===== */
         .hero {
-            padding: 60px 0 70px;
-            background: linear-gradient(145deg, #f2f7f2 0%, var(--fond) 100%);
-            border-bottom: 1px solid rgba(255, 107, 53, 0.15);
-        }
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-        .hero-content h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            color: var(--vert);
-            line-height: 1.2;
-            margin-bottom: 8px;
-        }
-        .hero-content h1 span { color: var(--accent); }
-        .hero-slogan {
-            font-size: 1.3rem;
-            color: var(--gris-texte);
-            margin-bottom: 24px;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-        .hero-slogan i { color: var(--accent); margin-right: 6px; }
-        .hero-cta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        /* ----- SLIDER (diaporama) ----- */
-        .hero-slider {
             position: relative;
-            width: 100%;
-            height: 320px;
-            border-radius: var(--radius);
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
             overflow: hidden;
-            box-shadow: var(--ombre);
-            background: #e8efe7;
+            padding: 120px 20px 80px;
         }
-        .slider-track {
+        /* Slider en fond */
+        .hero-slider-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .hero-slider-bg .slider-track {
             display: flex;
             width: 100%;
             height: 100%;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .slider-track .slide {
+        .hero-slider-bg .slide {
             min-width: 100%;
             height: 100%;
             flex-shrink: 0;
         }
-        .slider-track .slide img {
+        .hero-slider-bg .slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
+        /* Overlay sombre */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1;
+        }
+        /* Contenu centré */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        .hero-content h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+        }
+        .hero-content h1 span { color: var(--accent); }
+        .hero-content .hero-slogan {
+            font-size: 1.6rem;
+            font-weight: 300;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            margin-bottom: 30px;
+        }
+        .hero-content .hero-slogan i { color: var(--accent); margin-right: 8px; }
+        .hero-cta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .hero-cta .btn {
+            font-size: 1.05rem;
+            padding: 16px 40px;
+        }
+        .hero-cta .btn-outline {
+            border-color: white;
+            color: white;
+            background: transparent;
+            box-shadow: none;
+        }
+        .hero-cta .btn-outline:hover {
+            background: white;
+            color: var(--vert);
+        }
+        /* Flèches du slider (transparentes) */
         .slider-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,255,255,0.85);
-            border: none;
-            width: 36px;
-            height: 36px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.3);
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            font-size: 1rem;
-            color: var(--vert);
+            font-size: 1.2rem;
+            color: white;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
             z-index: 5;
         }
         .slider-btn:hover {
             background: var(--accent);
-            color: #fff;
+            border-color: var(--accent);
         }
-        .slider-btn.prev { left: 12px; }
-        .slider-btn.next { right: 12px; }
+        .slider-btn.prev { left: 20px; }
+        .slider-btn.next { right: 20px; }
 
         .slider-dots {
             position: absolute;
-            bottom: 16px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
+            gap: 14px;
             z-index: 5;
         }
         .slider-dots .dot {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.6);
-            border: 2px solid rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.4);
+            border: 2px solid rgba(255,255,255,0.6);
             cursor: pointer;
             transition: var(--transition);
         }
@@ -374,10 +462,17 @@
             transform: scale(1.2);
         }
 
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* ===== REASSURANCE ===== */
         .reassurance {
             padding: 50px 0 40px;
             background: var(--blanc);
+            position: relative;
+            z-index: 2;
         }
         .reassurance-grid {
             display: grid;
@@ -456,7 +551,7 @@
         }
         .produit-card:hover {
             transform: translateY(-10px);
-            box-shadow: var(--ombre-hover);
+            box-shadow: 0 16px 48px rgba(27, 77, 46, 0.18);
         }
         .produit-card .card-img {
             height: 240px;
@@ -777,13 +872,8 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-cta { justify-content: center; }
-            .hero-content h1 { font-size: 2.6rem; }
-            .hero-slider { height: 260px; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero-content .hero-slogan { font-size: 1.3rem; }
             .produits-grid { gap: 28px; }
         }
         @media (max-width: 768px) {
@@ -820,26 +910,41 @@
             .produit-card .card-body .product-actions {
                 grid-template-columns: 1fr;
             }
-            .hero-slider { height: 200px; }
+            .slider-btn { width: 34px; height: 34px; font-size: 0.9rem; }
+            .slider-btn.prev { left: 10px; }
+            .slider-btn.next { right: 10px; }
+            .hero { min-height: 70vh; padding: 100px 20px 60px; }
         }
         @media (max-width: 480px) {
             .hero-content h1 { font-size: 1.8rem; }
+            .hero-content .hero-slogan { font-size: 1rem; }
             .btn { padding: 12px 24px; font-size: 0.9rem; }
             .top-bar { font-size: 0.75rem; }
             .produit-card .card-img { height: 180px; }
             .modal .modal-img { height: 160px; }
             .whatsapp-float { width: 52px; height: 52px; font-size: 24px; bottom: 20px; right: 20px; }
-            .hero-slider { height: 160px; }
             .slider-btn { width: 28px; height: 28px; font-size: 0.7rem; }
+            .hero-cta .btn { font-size: 0.9rem; padding: 12px 24px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== LOADER ===== -->
+    <!-- ===== LOADER PREMIUM ===== -->
     <div class="page-loader" id="pageLoader">
-        <div class="loader-circle"></div>
-        <div class="loader-text">Vitelis<span>Store</span></div>
+        <div class="loader-leaf">
+            <i class="fas fa-leaf"></i>
+            <i class="fas fa-leaf"></i>
+            <i class="fas fa-leaf"></i>
+            <div class="loader-ring"></div>
+        </div>
+        <div class="loader-text">
+            <i class="fas fa-seedling"></i>
+            Vitelis<span>Store</span>
+        </div>
+        <div class="loader-dots">
+            <span></span><span></span><span></span>
+        </div>
     </div>
 
     <!-- ===== TOP BAR ===== -->
@@ -854,7 +959,7 @@
     <header class="header">
         <div class="container header-inner">
             <div class="logo">
-                <img src="logo.png" alt="VitelisStore" />
+                <img src="VitelisSores/logo.jpg" alt="VitelisStore" />
                 <span>Store</span>
             </div>
             <nav class="nav" id="mainNav">
@@ -873,33 +978,39 @@
         </div>
     </header>
 
-    <!-- ===== HERO AVEC SLIDER ===== -->
+    <!-- ===== HERO AVEC SLIDER EN FOND ===== -->
     <section class="hero" id="hero">
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <h1>Soins Naturels,<br /><span>Beauté &amp; Bien-être</span></h1>
-                <p class="hero-slogan">
-                    <i class="fas fa-leaf"></i> Naturellement, pour vous.
-                </p>
-                <div class="hero-cta">
-                    <a href="#catalogue" class="btn">Découvrir nos produits <i class="fas fa-arrow-right"></i></a>
-                    <a href="#catalogue" class="btn btn-outline">Voir la gamme</a>
-                </div>
+        <!-- Slider en arrière-plan -->
+        <div class="hero-slider-bg" id="heroSliderBg">
+            <div class="slider-track" id="sliderTrack">
+                <div class="slide"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1920&q=80" alt="Nature et bien-être" /></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1920&q=80" alt="Beauté naturelle" /></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&q=80" alt="Soins naturels" /></div>
             </div>
-            <div class="hero-slider" id="heroSlider">
-                <div class="slider-track" id="sliderTrack">
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&crop=center" alt="Soin naturel" /></div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&h=400&fit=crop&crop=center" alt="Beauté naturelle" /></div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&h=400&fit=crop&crop=center" alt="Bien-être" /></div>
-                </div>
-                <button class="slider-btn prev" id="sliderPrev"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-btn next" id="sliderNext"><i class="fas fa-chevron-right"></i></button>
-                <div class="slider-dots" id="sliderDots">
-                    <span class="dot active" data-index="0"></span>
-                    <span class="dot" data-index="1"></span>
-                    <span class="dot" data-index="2"></span>
-                </div>
+        </div>
+        <div class="hero-overlay"></div>
+
+        <!-- Contenu centré -->
+        <div class="hero-content">
+            <h1>Soins Naturels,<br /><span>Beauté &amp; Bien-être</span></h1>
+            <p class="hero-slogan">
+                <i class="fas fa-leaf"></i> Naturellement, pour vous.
+            </p>
+            <div class="hero-cta">
+                <a href="#catalogue" class="btn btn-accent">Découvrir nos produits <i class="fas fa-arrow-right"></i></a>
+                <a href="#catalogue" class="btn btn-outline">Voir la gamme</a>
             </div>
+        </div>
+
+        <!-- Flèches du slider -->
+        <button class="slider-btn prev" id="sliderPrev"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn next" id="sliderNext"><i class="fas fa-chevron-right"></i></button>
+
+        <!-- Dots -->
+        <div class="slider-dots" id="sliderDots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
         </div>
     </section>
 
@@ -1027,10 +1138,10 @@
         // ===== CACHER LE LOADER =====
         window.addEventListener('load', function() {
             const loader = document.getElementById('pageLoader');
-            setTimeout(function() { loader.classList.add('hidden'); }, 800);
+            setTimeout(function() { loader.classList.add('hidden'); }, 1000);
         });
 
-        // ===== SLIDER (Diaporama) =====
+        // ===== SLIDER EN FOND =====
         (function() {
             const track = document.getElementById('sliderTrack');
             const dots = document.querySelectorAll('.dot');
@@ -1055,7 +1166,7 @@
 
             function startInterval() {
                 if (interval) clearInterval(interval);
-                interval = setInterval(nextSlide, 4000);
+                interval = setInterval(nextSlide, 5000);
             }
 
             function resetInterval() {
@@ -1063,7 +1174,6 @@
                 startInterval();
             }
 
-            // Événements
             nextBtn.addEventListener('click', function() { nextSlide(); resetInterval(); });
             prevBtn.addEventListener('click', function() { prevSlide(); resetInterval(); });
 
@@ -1076,11 +1186,10 @@
             });
 
             // Pause au survol
-            const slider = document.getElementById('heroSlider');
-            slider.addEventListener('mouseenter', () => clearInterval(interval));
-            slider.addEventListener('mouseleave', startInterval);
+            const hero = document.getElementById('hero');
+            hero.addEventListener('mouseenter', () => clearInterval(interval));
+            hero.addEventListener('mouseleave', startInterval);
 
-            // Démarrer
             goToSlide(0);
             startInterval();
         })();
@@ -1092,7 +1201,7 @@
                 nom: 'Bucco Fraîche',
                 prix: '5 000 FCFA',
                 categorie: 'Soin Bucco-dentaire',
-                image: 'buco%20fraiche.png',
+                image: 'VitelisSores/bucofraiche.png',
                 description: 'Bain de bouche 100 % naturel contre la mauvaise haleine.',
                 utilisation: '3 fois par semaine pendant 2 semaines (après brossage le soir), puis 1 fois par semaine. Utilisation à partir de 12 ans.',
                 composition: 'Extrait de plantes, écorce de palmier, extrait de jasmin.',
@@ -1104,7 +1213,7 @@
                 nom: 'Souple Éclat',
                 prix: '2 500 FCFA',
                 categorie: 'Soin Capillaire',
-                image: 'souple%20eclat.png',
+                image: 'VitelisSores/soupleeclat.png',
                 description: 'Soin organique anti-pelliculaire & pousse des cheveux.',
                 utilisation: 'Appliquer sur cheveux humides, masser doucement, laisser poser 10 min puis rincer. Utiliser 2 à 3 fois par semaine.',
                 composition: 'Beurre de karité, menthol, huile de menthe poivrée, soufre.',
@@ -1238,7 +1347,7 @@
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', function() {
             genererCartes();
-            console.log('🌿 VitelisStore avec diaporama prêt !');
+            console.log('🌿 VitelisStore avec diaporama en fond prêt !');
         });
     </script>
 </body>
