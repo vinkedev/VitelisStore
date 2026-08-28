@@ -871,7 +871,7 @@
     <header class="header">
         <div class="container header-inner">
             <div class="logo">
-                <img src="logo.jpg" alt="VitelisStore" />
+                <img src="VitelisSores/logo.jpg" alt="VitelisStore" />
                 <span>Store</span>
             </div>
             <nav class="nav" id="mainNav">
@@ -890,10 +890,11 @@
         </div>
     </header>
 
-    <!-- ===== HERO AVEC SLIDER EN FOND ===== -->
+    <!-- ===== HERO AVEC SLIDER EN FOND (continu) ===== -->
     <section class="hero" id="hero">
         <div class="hero-slider" id="heroSlider">
-            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1920&q=80');"></div>
+            <!-- NOUVELLE PREMIÈRE IMAGE (remplacée) -->
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=1920&q=80');"></div>
             <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1920&q=80');"></div>
             <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&q=80');"></div>
         </div>
@@ -1007,8 +1008,9 @@
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
-                <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 68 33 02 83</p>
-                <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 64 69 47 48</p>
+                <!-- Numéros retirés pour l'instant, tu les ajouteras plus tard -->
+                <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 XX XX XX XX</p>
+                <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 XX XX XX XX</p>
                 <div class="socials">
                     <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -1021,8 +1023,8 @@
         </div>
     </footer>
 
-    <!-- ===== WHATSAPP FLOAT ===== -->
-    <a href="https://wa.me/22668330283" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <!-- ===== WHATSAPP FLOAT (lien temporaire #) ===== -->
+    <a href="#" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -1034,7 +1036,7 @@
             setTimeout(function() { loader.classList.add('hidden'); }, 1000);
         });
 
-        // ===== SLIDER EN FOND (automatique toutes les 3s) =====
+        // ===== SLIDER EN FOND (automatique toutes les 3s, sans pause) =====
         (function() {
             const slides = document.querySelectorAll('.hero-slider .slide');
             let current = 0;
@@ -1057,28 +1059,25 @@
                 interval = setInterval(next, 3000);
             }
 
-            // Démarrer
+            // Démarrer sans événements d'arrêt
             goTo(0);
             startInterval();
 
-            // Pause au survol (optionnel)
-            const hero = document.querySelector('.hero');
-            hero.addEventListener('mouseenter', () => clearInterval(interval));
-            hero.addEventListener('mouseleave', startInterval);
+            // Pas de pause au survol ni au scroll
         })();
 
-        // ===== DONNÉES PRODUITS =====
+        // ===== DONNÉES PRODUITS (chemins avec dossier VitelisSores) =====
         const produitsData = {
             bucco: {
                 id: 'bucco',
                 nom: 'Bucco Fraîche',
                 prix: '5 000 FCFA',
                 categorie: 'Soin Bucco-dentaire',
-                image: 'bucofraiche.png',
+                image: 'VitelisSores/bucofraiche.png',
                 description: 'Bain de bouche 100 % naturel contre la mauvaise haleine.',
                 utilisation: '3 fois par semaine pendant 2 semaines (après brossage le soir), puis 1 fois par semaine. Utilisation à partir de 12 ans.',
                 composition: 'Extrait de plantes, écorce de palmier, extrait de jasmin.',
-                whatsapp: '+22668330283',
+                whatsapp: '#',  // lien temporaire (tu mettras ton numéro plus tard)
                 message: 'Bonjour VitelisStore, je souhaite commander Bucco Fraîche (5 000 FCFA)'
             },
             souple: {
@@ -1086,11 +1085,11 @@
                 nom: 'Souple Éclat',
                 prix: '2 500 FCFA',
                 categorie: 'Soin Capillaire',
-                image: 'soupleeclat.png',
+                image: 'VitelisSores/soupleeclat.png',
                 description: 'Soin organique anti-pelliculaire & pousse des cheveux.',
                 utilisation: 'Appliquer sur cheveux humides, masser doucement, laisser poser 10 min puis rincer. Utiliser 2 à 3 fois par semaine.',
                 composition: 'Beurre de karité, menthol, huile de menthe poivrée, soufre.',
-                whatsapp: '+22668330283',
+                whatsapp: '#',
                 message: 'Bonjour VitelisStore, je souhaite commander Souple Éclat (2 500 FCFA)'
             }
         };
@@ -1100,7 +1099,8 @@
             const grid = document.getElementById('produitsGrid');
             grid.innerHTML = '';
             Object.values(produitsData).forEach(p => {
-                const whatsappLink = `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}`;
+                // lien WhatsApp temporaire
+                const whatsappLink = p.whatsapp !== '#' ? `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}` : '#';
                 const card = document.createElement('div');
                 card.className = 'produit-card';
                 card.innerHTML = `
@@ -1156,7 +1156,7 @@
                         <li>Livraison disponible sur tout le Burkina</li>
                     </ul>
                 </div>
-                <a href="https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}" target="_blank" class="btn btn-whatsapp">
+                <a href="${p.whatsapp !== '#' ? `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}` : '#'}" target="_blank" class="btn btn-whatsapp">
                     <i class="fab fa-whatsapp"></i> Commander via WhatsApp
                 </a>
             `;
@@ -1220,7 +1220,7 @@
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', function() {
             genererCartes();
-            console.log('🌿 VitelisStore avec diaporama en fond prêt !');
+            console.log('🌿 VitelisStore avec diaporama en fond (continu) prêt !');
         });
     </script>
 </body>
