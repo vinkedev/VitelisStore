@@ -205,23 +205,7 @@
             40% { transform: scale(1); opacity: 1; }
         }
 
-        /* ===== TOP BAR ===== */
-        .top-bar {
-            background: var(--vert);
-            color: #fff;
-            font-size: 0.85rem;
-            text-align: center;
-            padding: 8px 16px;
-            letter-spacing: 0.3px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 10;
-        }
-        .top-bar i { color: var(--accent); }
+        /* ===== TOP BAR SUPPRIMÉE ===== */
 
         /* ===== HEADER ===== */
         .header {
@@ -841,7 +825,6 @@
             .hero-content h1 { font-size: 1.8rem; }
             .hero-content .subtitle { font-size: 1rem; }
             .hero-buttons .btn { padding: 12px 20px; font-size: 0.85rem; }
-            .top-bar { font-size: 0.7rem; }
             .produit-card .card-img { height: 180px; }
             .modal .modal-img { height: 160px; }
             .hero { height: 70vh; min-height: 350px; }
@@ -859,13 +842,7 @@
         </div>
     </div>
 
-    <!-- ===== TOP BAR ===== -->
-    <div class="top-bar">
-        <i class="fas fa-truck"></i>
-        Livraison disponible à Ouagadougou et partout au Burkina Faso
-        <span style="margin:0 4px;">🇧🇫</span>
-        <i class="fas fa-leaf" style="margin-left:12px;"></i>
-    </div>
+    <!-- ===== TOP BAR SUPPRIMÉE ===== -->
 
     <!-- ===== HEADER ===== -->
     <header class="header">
@@ -890,7 +867,7 @@
         </div>
     </header>
 
-    <!-- ===== HERO AVEC SLIDER EN FOND (continu) ===== -->
+    <!-- ===== HERO AVEC SLIDER EN FOND ===== -->
     <section class="hero" id="hero">
         <div class="hero-slider" id="heroSlider">
             <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1544717304-a2db4a7b16ee?w=1920&q=80');"></div>
@@ -1007,7 +984,6 @@
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
-                <!-- Numéros retirés pour l'instant, tu les ajouteras plus tard -->
                 <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 XX XX XX XX</p>
                 <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 XX XX XX XX</p>
                 <div class="socials">
@@ -1022,20 +998,20 @@
         </div>
     </footer>
 
-    <!-- ===== WHATSAPP FLOAT (lien temporaire #) ===== -->
+    <!-- ===== WHATSAPP FLOAT ===== -->
     <a href="#" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== CACHER LE LOADER =====
+        // ===== CACHER LE LOADER (réduit à 500 ms) =====
         window.addEventListener('load', function() {
             const loader = document.getElementById('pageLoader');
-            setTimeout(function() { loader.classList.add('hidden'); }, 1000);
+            setTimeout(function() { loader.classList.add('hidden'); }, 500);
         });
 
-        // ===== SLIDER EN FOND (automatique toutes les 3s, sans pause) =====
+        // ===== SLIDER EN FOND (automatique toutes les 3s) =====
         (function() {
             const slides = document.querySelectorAll('.hero-slider .slide');
             let current = 0;
@@ -1058,14 +1034,11 @@
                 interval = setInterval(next, 3000);
             }
 
-            // Démarrer sans événements d'arrêt
             goTo(0);
             startInterval();
-
-            // Pas de pause au survol ni au scroll
         })();
 
-        // ===== DONNÉES PRODUITS (chemins avec dossier VitelisSores) =====
+        // ===== DONNÉES PRODUITS =====
         const produitsData = {
             bucco: {
                 id: 'bucco',
@@ -1076,7 +1049,7 @@
                 description: 'Bain de bouche 100 % naturel contre la mauvaise haleine.',
                 utilisation: '3 fois par semaine pendant 2 semaines (après brossage le soir), puis 1 fois par semaine. Utilisation à partir de 12 ans.',
                 composition: 'Extrait de plantes, écorce de palmier, extrait de jasmin.',
-                whatsapp: '#',  // lien temporaire (tu mettras ton numéro plus tard)
+                whatsapp: '#',
                 message: 'Bonjour VitelisStore, je souhaite commander Bucco Fraîche (5 000 FCFA)'
             },
             souple: {
@@ -1098,7 +1071,6 @@
             const grid = document.getElementById('produitsGrid');
             grid.innerHTML = '';
             Object.values(produitsData).forEach(p => {
-                // lien WhatsApp temporaire
                 const whatsappLink = p.whatsapp !== '#' ? `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}` : '#';
                 const card = document.createElement('div');
                 card.className = 'produit-card';
@@ -1219,7 +1191,7 @@
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', function() {
             genererCartes();
-            console.log('🌿 VitelisStore avec diaporama en fond (continu) prêt !');
+            console.log('🌿 VitelisStore avec diaporama en fond et loader raccourci prêt !');
         });
     </script>
 </body>
