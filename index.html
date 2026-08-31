@@ -264,7 +264,7 @@
             cursor: pointer;
         }
 
-        /* ===== HERO AVEC SLIDER ===== */
+        /* ===== HERO AVEC SLIDER ET TEXTE DYNAMIQUE ===== */
         .hero {
             position: relative;
             height: 90vh;
@@ -807,7 +807,7 @@
 </head>
 <body>
 
-    <!-- ===== NOUVEAU LOADER AVEC ICÔNE FEUILLE ===== -->
+    <!-- ===== LOADER ===== -->
     <div class="page-loader" id="pageLoader">
         <div class="loader-leaf"><i class="fas fa-leaf"></i></div>
         <div class="loader-text">Vitelis<span>Store</span></div>
@@ -839,16 +839,14 @@
         </div>
     </header>
 
-    <!-- ===== HERO AVEC SLIDER (vos 3 images) ===== -->
+    <!-- ===== HERO AVEC SLIDER DYNAMIQUE ===== -->
     <section class="hero" id="hero">
         <div class="hero-slider" id="heroSlider">
-            <div class="slide active" style="background-image: url('VitelisSores/bucofraiche.jpg');"></div>
-            <div class="slide" style="background-image: url('VitelisSores/soupleeclat.jpg');"></div>
-            <div class="slide" style="background-image: url('VitelisSores/logo.jpg');"></div>
+            <!-- Les slides sont générées par JS, on laisse vide -->
         </div>
-        <div class="hero-content">
-            <h1>Soins Naturels,<br /><span>Beauté &amp; Bien-être</span></h1>
-            <p class="subtitle"><i class="fas fa-leaf"></i> Naturellement, pour vous.</p>
+        <div class="hero-content" id="heroContent">
+            <h1 id="slideTitle">Soins Naturels,<br /><span>Beauté &amp; Bien-être</span></h1>
+            <p class="subtitle" id="slideSubtitle"><i class="fas fa-leaf"></i> Naturellement, pour vous.</p>
             <div class="hero-buttons">
                 <a href="#catalogue" class="btn btn-accent">Découvrir nos produits <i class="fas fa-arrow-right"></i></a>
                 <a href="#catalogue" class="btn btn-outline" style="border-color:#fff;color:#fff;">Voir la gamme</a>
@@ -977,13 +975,48 @@
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== CACHER LE LOADER (temps réduit) =====
+        // ===== CACHER LE LOADER =====
         window.addEventListener('load', function() {
             const loader = document.getElementById('pageLoader');
             setTimeout(function() { loader.classList.add('hidden'); }, 300);
         });
 
-        // ===== SLIDER EN FOND (toutes les 3s) =====
+        // ===== DONNÉES DES SLIDES (2 produits) =====
+        const slidesData = [{
+            image: 'VitelisSores/bucofraiche.jpg',
+            title: 'Halte à la mauvaise haleine',
+            subtitle: 'Blanchit les dents naturellement',
+            produit: 'Bucco Fraîche'
+        }, {
+            image: 'VitelisSores/soupleeclat.jpg',
+            title: 'Des cheveux en pleine santé',
+            subtitle: 'Favorise la pousse et soigne les plaies',
+            produit: 'Souple Éclat'
+        }];
+
+        // ===== CONSTRUCTION DU SLIDER =====
+        const slider = document.getElementById('heroSlider');
+        slidesData.forEach((data, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'slide' + (index === 0 ? ' active' : '');
+            slide.style.backgroundImage = `url('${data.image}')`;
+            slider.appendChild(slide);
+        });
+
+        // ===== ÉLÉMENTS DU TEXTE =====
+        const titleEl = document.getElementById('slideTitle');
+        const subtitleEl = document.getElementById('slideSubtitle');
+
+        // ===== FONCTION DE MISE À JOUR DU TEXTE =====
+        function updateHeroContent(index) {
+            const data = slidesData[index];
+            if (!data) return;
+            // On met à jour le titre et le sous-titre
+            titleEl.innerHTML = data.title + '<br /><span>' + data.produit + '</span>';
+            subtitleEl.innerHTML = '<i class="fas fa-leaf"></i> ' + data.subtitle;
+        }
+
+        // ===== SLIDER AUTOMATIQUE =====
         (function() {
             const slides = document.querySelectorAll('.hero-slider .slide');
             let current = 0;
@@ -995,6 +1028,7 @@
                     s.classList.toggle('active', i === index);
                 });
                 current = index;
+                updateHeroContent(index);
             }
 
             function next() {
@@ -1010,7 +1044,7 @@
             startInterval();
         })();
 
-        // ===== DONNÉES PRODUITS (avec WhatsApp et descriptions mises à jour) =====
+        // ===== DONNÉES PRODUITS (pour le catalogue et la modale) =====
         const produitsData = {
             bucco: {
                 id: 'bucco',
@@ -1164,7 +1198,8 @@
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', function() {
             genererCartes();
-            console.log('🌿 VitelisStore avec nouvelles descriptions et WhatsApp OK !');
+            // Initialisation du texte du slider (déjà fait dans goTo(0))
+            console.log('🌿 VitelisStore avec slider dynamique et texte personnalisé !');
         });
     </script>
 </body>
