@@ -429,7 +429,7 @@
             box-shadow: var(--ombre-hover);
         }
         .produit-card .card-img {
-            height: 240px;
+            height: 380px;
             background: #f0f5ee;
             display: flex;
             align-items: center;
@@ -440,9 +440,12 @@
         }
         .produit-card .card-img img {
             height: 100%;
-            width: auto;
-            object-fit: contain;
-            padding: 12px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .produit-card:hover .card-img img {
+            transform: scale(1.06);
         }
         .produit-card .card-img .badge-cat {
             position: absolute;
@@ -799,7 +802,7 @@
             .hero-content h1 { font-size: 1.8rem; }
             .hero-content .subtitle { font-size: 1rem; }
             .hero-buttons .btn { padding: 12px 20px; font-size: 0.85rem; }
-            .produit-card .card-img { height: 180px; }
+            .produit-card .card-img { height: 280px; }
             .modal .modal-img { height: 160px; }
             .hero { height: 70vh; min-height: 350px; }
         }
