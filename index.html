@@ -104,7 +104,7 @@
             color: #fff;
         }
 
-        /* ===== LOADER PREMIUM ===== */
+        /* ===== NOUVEAU LOADER AVEC ICÔNE FEUILLE ===== */
         .page-loader {
             position: fixed;
             top: 0;
@@ -117,47 +117,23 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-            gap: 24px;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            gap: 20px;
         }
         .page-loader.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-        .loader-ring {
-            position: relative;
-            width: 80px;
-            height: 80px;
+        .loader-leaf {
+            font-size: 4rem;
+            color: var(--vert);
+            animation: leafSpin 1.2s ease-in-out infinite;
         }
-        .loader-ring::before,
-        .loader-ring::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            border: 4px solid transparent;
-            animation: spinRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        }
-        .loader-ring::before {
-            width: 100%;
-            height: 100%;
-            border-top-color: var(--vert);
-            border-right-color: var(--accent);
-            animation-duration: 1.2s;
-        }
-        .loader-ring::after {
-            width: 70%;
-            height: 70%;
-            top: 15%;
-            left: 15%;
-            border-bottom-color: var(--accent);
-            border-left-color: var(--vert);
-            animation-duration: 0.8s;
-            animation-direction: reverse;
-        }
-        @keyframes spinRing {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes leafSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); color: var(--accent); }
+            100% { transform: rotate(360deg) scale(1); }
         }
         .loader-text {
             font-family: 'Montserrat', sans-serif;
@@ -191,21 +167,19 @@
             gap: 10px;
         }
         .loader-dots span {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             background: var(--accent);
-            animation: dotBounce 1.4s ease-in-out infinite;
+            animation: dotPulse 1.2s ease-in-out infinite;
         }
-        .loader-dots span:nth-child(1) { animation-delay: 0s; }
-        .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes dotBounce {
+        .loader-dots span:nth-child(1) { animation-delay: 0s; background: var(--vert); }
+        .loader-dots span:nth-child(2) { animation-delay: 0.2s; background: var(--accent); }
+        .loader-dots span:nth-child(3) { animation-delay: 0.4s; background: var(--vert-clair); }
+        @keyframes dotPulse {
             0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
             40% { transform: scale(1); opacity: 1; }
         }
-
-        /* ===== TOP BAR SUPPRIMÉE ===== */
 
         /* ===== HEADER ===== */
         .header {
@@ -290,7 +264,7 @@
             cursor: pointer;
         }
 
-        /* ===== HERO AVEC SLIDER EN FOND ===== */
+        /* ===== HERO AVEC SLIDER ===== */
         .hero {
             position: relative;
             height: 90vh;
@@ -833,16 +807,14 @@
 </head>
 <body>
 
-    <!-- ===== LOADER PREMIUM ===== -->
+    <!-- ===== NOUVEAU LOADER AVEC ICÔNE FEUILLE ===== -->
     <div class="page-loader" id="pageLoader">
-        <div class="loader-ring"></div>
+        <div class="loader-leaf"><i class="fas fa-leaf"></i></div>
         <div class="loader-text">Vitelis<span>Store</span></div>
         <div class="loader-dots">
             <span></span><span></span><span></span>
         </div>
     </div>
-
-    <!-- ===== TOP BAR SUPPRIMÉE ===== -->
 
     <!-- ===== HEADER ===== -->
     <header class="header">
@@ -867,12 +839,12 @@
         </div>
     </header>
 
-    <!-- ===== HERO AVEC SLIDER EN FOND ===== -->
+    <!-- ===== HERO AVEC SLIDER (vos 3 images) ===== -->
     <section class="hero" id="hero">
         <div class="hero-slider" id="heroSlider">
-            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1544717304-a2db4a7b16ee?w=1920&q=80');"></div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1920&q=80');"></div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&q=80');"></div>
+            <div class="slide active" style="background-image: url('VitelisSores/bucofraiche.jpg');"></div>
+            <div class="slide" style="background-image: url('VitelisSores/soupleeclat.jpg');"></div>
+            <div class="slide" style="background-image: url('VitelisSores/logo.jpg');"></div>
         </div>
         <div class="hero-content">
             <h1>Soins Naturels,<br /><span>Beauté &amp; Bien-être</span></h1>
@@ -984,7 +956,7 @@
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
-                <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 XX XX XX XX</p>
+                <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 77 02 82 89</p>
                 <p><i class="fas fa-phone" style="color:var(--accent);"></i> +226 XX XX XX XX</p>
                 <div class="socials">
                     <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
@@ -999,19 +971,19 @@
     </footer>
 
     <!-- ===== WHATSAPP FLOAT ===== -->
-    <a href="#" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <a href="https://wa.me/22677028289" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== CACHER LE LOADER (réduit à 500 ms) =====
+        // ===== CACHER LE LOADER (temps réduit) =====
         window.addEventListener('load', function() {
             const loader = document.getElementById('pageLoader');
-            setTimeout(function() { loader.classList.add('hidden'); }, 500);
+            setTimeout(function() { loader.classList.add('hidden'); }, 300);
         });
 
-        // ===== SLIDER EN FOND (automatique toutes les 3s) =====
+        // ===== SLIDER EN FOND (toutes les 3s) =====
         (function() {
             const slides = document.querySelectorAll('.hero-slider .slide');
             let current = 0;
@@ -1038,18 +1010,18 @@
             startInterval();
         })();
 
-        // ===== DONNÉES PRODUITS =====
+        // ===== DONNÉES PRODUITS (avec WhatsApp et descriptions mises à jour) =====
         const produitsData = {
             bucco: {
                 id: 'bucco',
                 nom: 'Bucco Fraîche',
                 prix: '5 000 FCFA',
                 categorie: 'Soin Bucco-dentaire',
-                image: 'VitelisSores/bucofraiche.png',
-                description: 'Bain de bouche 100 % naturel contre la mauvaise haleine.',
+                image: 'VitelisSores/bucofraiche.jpg',
+                description: 'Produit contre les mauvaises haleines, aide à blanchir les dents. Très efficace.',
                 utilisation: '3 fois par semaine pendant 2 semaines (après brossage le soir), puis 1 fois par semaine. Utilisation à partir de 12 ans.',
                 composition: 'Extrait de plantes, écorce de palmier, extrait de jasmin.',
-                whatsapp: '#',
+                whatsapp: '22677028289',
                 message: 'Bonjour VitelisStore, je souhaite commander Bucco Fraîche (5 000 FCFA)'
             },
             souple: {
@@ -1057,11 +1029,11 @@
                 nom: 'Souple Éclat',
                 prix: '2 500 FCFA',
                 categorie: 'Soin Capillaire',
-                image: 'VitelisSores/soupleeclat.png',
-                description: 'Soin organique anti-pelliculaire & pousse des cheveux.',
+                image: 'VitelisSores/soupleeclat.jpg',
+                description: 'Produits pour faire pousser les cheveux, barbes, favoris, et soigne les plaies de tête et poues.',
                 utilisation: 'Appliquer sur cheveux humides, masser doucement, laisser poser 10 min puis rincer. Utiliser 2 à 3 fois par semaine.',
                 composition: 'Beurre de karité, menthol, huile de menthe poivrée, soufre.',
-                whatsapp: '#',
+                whatsapp: '22677028289',
                 message: 'Bonjour VitelisStore, je souhaite commander Souple Éclat (2 500 FCFA)'
             }
         };
@@ -1071,7 +1043,7 @@
             const grid = document.getElementById('produitsGrid');
             grid.innerHTML = '';
             Object.values(produitsData).forEach(p => {
-                const whatsappLink = p.whatsapp !== '#' ? `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}` : '#';
+                const whatsappLink = `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}`;
                 const card = document.createElement('div');
                 card.className = 'produit-card';
                 card.innerHTML = `
@@ -1104,6 +1076,7 @@
         function ouvrirModal(id) {
             const p = produitsData[id];
             if (!p) return;
+            const whatsappLink = `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}`;
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = `
                 <div class="modal-img"><img src="${p.image}" alt="${p.nom}" /></div>
@@ -1127,7 +1100,7 @@
                         <li>Livraison disponible sur tout le Burkina</li>
                     </ul>
                 </div>
-                <a href="${p.whatsapp !== '#' ? `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.message)}` : '#'}" target="_blank" class="btn btn-whatsapp">
+                <a href="${whatsappLink}" target="_blank" class="btn btn-whatsapp">
                     <i class="fab fa-whatsapp"></i> Commander via WhatsApp
                 </a>
             `;
@@ -1191,7 +1164,7 @@
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', function() {
             genererCartes();
-            console.log('🌿 VitelisStore avec diaporama en fond et loader raccourci prêt !');
+            console.log('🌿 VitelisStore avec nouvelles descriptions et WhatsApp OK !');
         });
     </script>
 </body>
